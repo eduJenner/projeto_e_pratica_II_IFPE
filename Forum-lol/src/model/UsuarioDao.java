@@ -5,7 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
 import util.ConnectionFactory;
 
@@ -17,20 +18,17 @@ public class UsuarioDao {
 	}
 
 	public void adiciona(Usuario usuario) {
-		String sql = "insert into usuarios"
-				+ "(nome,sobrenome,email,confirmarEmail,dataNasc,senha,confirmarSenha,nomeUsuario)"
-				+ " values (?,?,?,?,?,?,?,?)";
+		String sql = "insert into usuario"
+				+ "(nome,email,login,senha,dataNascimento)"
+				+ " values (?,?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			stmt.setString(1, usuario.getNome());
-			stmt.setString(2, usuario.getSobrenome());
-			stmt.setString(3, usuario.getEmail());
-			stmt.setString(4, usuario.getConfirmarEmail());
-			stmt.setDate(5, new Date(usuario.getDataNasc().getTimeInMillis()));
-			stmt.setString(6, usuario.getSenha());
-			stmt.setString(7, usuario.getConfirmarSenha());
-			stmt.setString(8, usuario.getNomeUsuario());
+			stmt.setString(2, usuario.getEmail());
+			stmt.setString(3, usuario.getLogin());
+			stmt.setString(4, usuario.getSenha());
+			stmt.setDate(5, new Date(usuario.getDataNascimento().getTime()));
 
 			stmt.execute();
 			stmt.close();
@@ -41,60 +39,65 @@ public class UsuarioDao {
 		}
 	}
 
-	public Usuario buscarPorId(Long id) {
-		Usuario usuario = null;
+	public void alterar(Usuario usuario) {
 		try {
-			String sql = "select * from usuarios where id =?";
+			String sql = "update usuario set nome = ?,email = ?,login = ?,senha = ?,dataNascimento = ? where id = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setLong(1, id);
+
+			stmt.setString(1, usuario.getNome());
+			stmt.setString(2, usuario.getEmail());
+			stmt.setString(3, usuario.getLogin());
+			stmt.setString(4, usuario.getSenha());
+			stmt.setDate(5, usuario.getDataNascimento());
+
+			stmt.execute();
+			connection.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	public List<Usuario> listar() {
+		try {
+			List<Usuario> listaUsuario = new ArrayList<Usuario>();
+			String sql = "select * from usuario";
+			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
+
 			while (rs.next()) {
 
-				usuario = new Usuario();
+				Usuario usuario = new Usuario();
 
-				usuario.setId(rs.getLong("id"));
+				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
-				usuario.setSobrenome(rs.getString("sobrenome"));
 				usuario.setEmail(rs.getString("email"));
-				usuario.setConfirmarEmail(rs.getString("confirmarEmail"));
+				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setConfirmarSenha(rs.getString("confirmarSenha"));
-				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
-
-				Calendar data = Calendar.getInstance();
-				data.setTime(rs.getDate("dataNasc"));
-				usuario.setDataNasc(data);
+				usuario.setDataNascimento(rs.getDate("dataNascimento"));
 
 			}
+
 			rs.close();
 			stmt.close();
+			connection.close();
 
-			return usuario;
+			return listaUsuario;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void altera(Usuario usuario) {
-		String sql = "update usuarios set nome=?,sobrenome=?, email=?, confirmarEmail=? , dataNasc=? , senha=? , confirmarSenha=? , nomeUsuario=?"
-				+ " where id=?";
+	public void remover(Usuario usuario) {
 		try {
+			String sql = "delete from * usuario where id = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, usuario.getNome());
-			stmt.setString(2, usuario.getSobrenome());
-			stmt.setString(3, usuario.getEmail());
-			stmt.setString(4, usuario.getConfirmarEmail());
-			stmt.setDate(5, new Date(usuario.getDataNasc().getTimeInMillis()));
-			stmt.setString(6, usuario.getSenha());
-			stmt.setString(7, usuario.getConfirmarSenha());
-			stmt.setString(8, usuario.getNomeUsuario());
-			stmt.setLong(9, usuario.getId());
-
+			stmt.setInt(1, usuario.getId());
 			stmt.execute();
-			stmt.close();
+			connection.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
 }
