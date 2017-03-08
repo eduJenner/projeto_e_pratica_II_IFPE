@@ -19,8 +19,8 @@ public class UsuarioDao {
 
 	public void adiciona(Usuario usuario) {
 		String sql = "insert into usuario"
-				+ "(nome,email,login,senha,dataNascimento)"
-				+ " values (?,?,?,?,?)";
+				+ "(nome,email,login,senha,dataNascimento,imagem)"
+				+ " values (?,?,?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -29,6 +29,7 @@ public class UsuarioDao {
 			stmt.setString(3, usuario.getLogin());
 			stmt.setString(4, usuario.getSenha());
 			stmt.setDate(5, new Date(usuario.getDataNascimento().getTime()));
+			stmt.setString(6, usuario.getImagem());
 
 			stmt.execute();
 			stmt.close();

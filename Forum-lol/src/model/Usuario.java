@@ -11,7 +11,7 @@ public class Usuario {
 	private String login; 
 	private String senha; 
 	private Date dataNascimento; 
-	private String foto;
+	private String imagem;
 	
 	public int getId() {
 		return id;
@@ -49,12 +49,14 @@ public class Usuario {
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	public String getFoto() {
-		return foto;
+	public String getImagem() {
+		return imagem;
 	}
-	public void setFoto(String foto) {
-		this.foto = foto;
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
+	
+	
 	
 	
 }
