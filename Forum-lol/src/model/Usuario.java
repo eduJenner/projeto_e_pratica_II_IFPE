@@ -1,7 +1,8 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Usuario {
 
@@ -9,8 +10,9 @@ public class Usuario {
 	private String nome; 
 	private String email; 
 	private String login; 
-	private String senha; 
-	private Date dataNascimento; 
+	private String senha;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	private Date dataNascimento;
 	private String imagem;
 	
 	public int getId() {
@@ -43,6 +45,7 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
