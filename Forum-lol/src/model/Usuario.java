@@ -11,7 +11,7 @@ public class Usuario {
 	private String email; 
 	private String login; 
 	private String senha;
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	private String imagem;
 	
