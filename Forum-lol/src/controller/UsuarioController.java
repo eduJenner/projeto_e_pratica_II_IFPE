@@ -24,7 +24,7 @@ public class UsuarioController {
 
 	// este método cadastra novos usuários
 	@RequestMapping("/cadastraUsuario")
-	public String cadastrar(Usuario usuario, @RequestParam("file") MultipartFile imagem) throws SQLException {
+	public String cadastrar(Usuario usuario, @RequestParam("file") MultipartFile imagem,Model model) throws SQLException {
 
 		if (Util.fazerUploadImagem(imagem)) {
 			usuario.setImagem(Calendar.getInstance().getTime() + " - " + imagem.getOriginalFilename());
@@ -32,7 +32,8 @@ public class UsuarioController {
 
 		UsuarioDao dao = new UsuarioDao();
 		dao.adiciona(usuario);
-		return "usuario/cadastrado";
+		model.addAttribute("msg", "Usuario(a) " + usuario.getLogin() +" Cadastrado com Sucesso!");
+		return "usuario/formulario";
 	}
 
 	@RequestMapping("/listarUsuario")
