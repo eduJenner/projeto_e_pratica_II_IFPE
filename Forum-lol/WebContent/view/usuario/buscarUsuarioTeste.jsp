@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-Usuário alterado com Sucesso!!!
+<form action="buscarUsuario" method="post">
+Informe seu Login:
+<input type="text" name="login">
+<input type="submit" value="Buscar">
+</form>
 </body>
 </html>

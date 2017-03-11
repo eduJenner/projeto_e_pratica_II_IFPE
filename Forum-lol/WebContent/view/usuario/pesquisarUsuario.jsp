@@ -10,6 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:import url="/view/menu/menu.jsp"></c:import>
+<h3>Lista de Usuários</h3>
+<div style="text-align: center; color: red;"> ${msg} </div>
 <table>
 <tr>
 	<td>ID</td>

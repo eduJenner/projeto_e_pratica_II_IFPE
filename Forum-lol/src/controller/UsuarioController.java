@@ -24,7 +24,8 @@ public class UsuarioController {
 
 	// este método cadastra novos usuários
 	@RequestMapping("/cadastraUsuario")
-	public String cadastrar(Usuario usuario, @RequestParam("file") MultipartFile imagem,Model model) throws SQLException {
+	public String cadastrar(Usuario usuario, @RequestParam("file") MultipartFile imagem, Model model)
+			throws SQLException {
 
 		if (Util.fazerUploadImagem(imagem)) {
 			usuario.setImagem(Calendar.getInstance().getTime() + " - " + imagem.getOriginalFilename());
@@ -32,7 +33,7 @@ public class UsuarioController {
 
 		UsuarioDao dao = new UsuarioDao();
 		dao.adiciona(usuario);
-		model.addAttribute("msg", "Usuario(a) " + usuario.getLogin() +" Cadastrado com Sucesso!");
+		model.addAttribute("msg", "Usuario(a) " + usuario.getLogin() + " Cadastrado com Sucesso!");
 		return "usuario/formulario";
 	}
 
@@ -55,21 +56,34 @@ public class UsuarioController {
 	}
 
 	@RequestMapping("/alterarUsuario")
-	public String alterar(Usuario usuario) throws SQLException {
+	public String alterar(Usuario usuario, Model model) throws SQLException {
 
 		UsuarioDao dao = new UsuarioDao();
 		dao.alterar(usuario);
-		return "usuario/alterado";
+		model.addAttribute("msg", "Usuario(a) " + usuario.getLogin() + " Alterado com Sucesso!");
+		return "forward:listarUsuario";
 
 	}
 
 	@RequestMapping("/removerUsuario")
-	public String removerUsuario(Usuario usuario) throws SQLException {
+	public String removerUsuario(Usuario usuario, Model model) throws SQLException {
 
 		UsuarioDao dao = new UsuarioDao();
 		dao.remover(usuario);
-
+		model.addAttribute("msg", "Usuario(a)  Removido com Sucesso!");
 		return "forward:listarUsuario";
 	}
+	@RequestMapping("/exibirBuscarUsuario")
+	public String exibirBuscarUsuario(){
+		return "usuario/buscarUsuarioTeste";
+	}
+	
+	@RequestMapping("/buscarUsuario")
+	public String buscarUsuario(Usuario usuario,Model model) throws SQLException {
 
+		UsuarioDao dao = new UsuarioDao();
+		Usuario usuarioCompleto = dao.buscarUsuario(usuario.getLogin());
+		model.addAttribute("usuario", usuarioCompleto);
+		return "usuario/alterarUsuario";
+	}
 }

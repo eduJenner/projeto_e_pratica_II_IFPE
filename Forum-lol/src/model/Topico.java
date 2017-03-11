@@ -7,9 +7,11 @@ public class Topico {
 	private int id;
 	private String titulo;
 	private Usuario usuario;
+	private Categoria categoria;
 	private Date data;
 	private int visualizacoes;
 	private String conteudo;
+	
 	public int getId() {
 		return id;
 	}
@@ -27,6 +29,13 @@ public class Topico {
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 	public Date getData() {
 		return data;

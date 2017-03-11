@@ -135,4 +135,36 @@ public class UsuarioDao {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public Usuario buscarUsuario(String login) {
+		try {
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM usuario WHERE login = ?");
+			stmt.setString(1, login);
+			ResultSet rs = stmt.executeQuery();
+
+			Usuario usuario = null;
+
+			if (rs.next()) {
+				usuario = new Usuario();
+
+				usuario.setId(rs.getInt("id"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setEmail(rs.getString("email"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setDataNascimento(rs.getDate("dataNascimento"));
+				usuario.setImagem(rs.getString("imagem"));
+
+			}
+
+			rs.close();
+			stmt.close();
+			connection.close();
+
+			return usuario;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 }
