@@ -8,7 +8,7 @@ public class Topico {
 	private String titulo;
 	private Usuario usuario;
 	private Categoria categoria;
-	private Date data;
+	private Date dataCriacaoDoTopico;
 	private int visualizacoes;
 	private String conteudo;
 	
@@ -37,11 +37,12 @@ public class Topico {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	public Date getData() {
-		return data;
+	
+	public Date getDataCriacaoDoTopico() {
+		return dataCriacaoDoTopico;
 	}
-	public void setData(Date data) {
-		this.data = data;
+	public void setDataCriacaoDoTopico(Date dataCriacaoDoTopico) {
+		this.dataCriacaoDoTopico = dataCriacaoDoTopico;
 	}
 	public int getVisualizacoes() {
 		return visualizacoes;
