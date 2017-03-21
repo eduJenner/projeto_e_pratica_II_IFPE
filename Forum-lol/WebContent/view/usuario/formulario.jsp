@@ -14,10 +14,11 @@
 	
 	<h3>Cadastro de Usuário</h3>
 	
-	<div style="text-align: center; color: red;"> ${msg} </div>
 	
+	<div style="text-align: center; color: red;"> ${msg} </div>
 	<form action="cadastraUsuario" method="post" enctype="multipart/form-data">
 	<form:errors path="usuario.nome" cssStyle="color: red;" />
+	
 	<br />Nome:<br />
 		<input type="text" name="nome">
 	<form:errors path="usuario.email" cssStyle="color: red;" />

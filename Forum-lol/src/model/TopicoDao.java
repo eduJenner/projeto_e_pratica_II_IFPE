@@ -15,16 +15,13 @@ public class TopicoDao {
 	
 	public void adiciona(Topico topico) {
 		try {
-			String sql = "insert into topico (titulo,conteudo,criadorDoTopico,categoriaDoTopico,dataCriacaoDoTopico,conteudo) values (?,?,?,?,?,?)";
+			String sql = "insert into topico (titulo,criadorDoTopico,categoriaDoTopico,conteudo) values (?,?,?,?)";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			stmt.setString(1, topico.getTitulo());
-			stmt.setString(2, topico.getConteudo());
-			stmt.setString(3, topico.getUsuario().getLogin());
-			stmt.setInt(4, topico.getCategoria().getId());
-			stmt.setDate(5, new java.sql.Date( topico.getDataCriacaoDoTopico().getTime()));
-			
-			stmt.setString(6, topico.getConteudo());
+			stmt.setInt(2,topico.getUsuario().getId());
+			stmt.setInt(3, topico.getCategoria().getId());
+			stmt.setString(4, topico.getConteudo());
 
 			stmt.execute();
 			stmt.close();

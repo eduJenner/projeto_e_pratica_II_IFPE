@@ -24,7 +24,7 @@
 	<td>${categoria.titulo}"</td>
 	<td>${categoria.descricao}</td>
 	<td>
-		<a href="novoTopico?id=${categoria.id}">Criar Tópico</a>
+		<a href="novoTopico?id=${categoria.id}" name="id">Criar Tópico</a>
 		<a href="exibirAlterarCategoria?id=${categoria.id}">Alterar</a>
         <a href="removerCategoria?id=${categoria.id}">Remover</a>
     </td>

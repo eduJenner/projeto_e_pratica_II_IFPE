@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -108,8 +109,31 @@ public class UsuarioController {
 	public String buscarUsuario(Usuario usuario, Model model) throws SQLException {
 
 		UsuarioDao dao = new UsuarioDao();
-		Usuario usuarioCompleto = dao.buscarUsuario(usuario.getLogin());
+		Usuario usuarioCompleto = dao.buscarLogin(usuario.getLogin());
 		model.addAttribute("usuario", usuarioCompleto);
 		return "usuario/alterarUsuario";
 	}
+	@RequestMapping("/exibirLogin")
+	public String exibirLogin(){
+		return"login/login";
+	}
+	
+	@RequestMapping("/efetuarLogin")
+	public String login(Usuario usuario, HttpSession session, Model model) throws SQLException{
+		
+		UsuarioDao dao = new  UsuarioDao();
+		Usuario usuarioLogado = dao.buscarUsuario(usuario);
+		if(usuarioLogado != null ){
+			session.setAttribute("usuarioLogado", usuarioLogado);
+			return"index";
+		}
+		model.addAttribute("msg", "Não foi encontrado um usuário com o login e senha informados.");
+		return "login/login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "index";
+		}
 }

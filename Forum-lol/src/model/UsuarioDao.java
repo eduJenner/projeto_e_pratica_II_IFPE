@@ -136,7 +136,7 @@ public class UsuarioDao {
 		}
 	}
 
-	public Usuario buscarUsuario(String login) {
+	public Usuario buscarLogin(String login) {
 		try {
 			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM usuario WHERE login = ?");
 			stmt.setString(1, login);
@@ -166,5 +166,38 @@ public class UsuarioDao {
 			throw new RuntimeException(e);
 		}
 
+	}
+	
+	public Usuario buscarUsuario(Usuario usuario) {
+
+		try {
+
+			Usuario usuarioConsultado = null;
+			PreparedStatement stmt = this.connection
+					.prepareStatement("select * from usuario where login = ? and senha = ?");
+			stmt.setString(1, usuario.getLogin());
+			stmt.setString(2, usuario.getSenha());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				
+				usuarioConsultado = new Usuario();
+				usuarioConsultado.setId(rs.getInt("id"));
+				usuarioConsultado.setNome(rs.getString("nome"));
+				usuarioConsultado.setEmail(rs.getString("email"));
+				usuarioConsultado.setLogin(rs.getString("login"));
+				usuarioConsultado.setSenha(rs.getString("senha"));
+				usuarioConsultado.setDataNascimento(rs.getDate("dataNascimento"));
+				usuarioConsultado.setImagem(rs.getString("imagem"));
+			}
+
+			rs.close();
+			stmt.close();
+
+			return usuarioConsultado;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

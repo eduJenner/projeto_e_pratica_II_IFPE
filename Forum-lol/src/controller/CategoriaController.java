@@ -33,7 +33,7 @@ public class CategoriaController {
 		CategoriaDao dao = new CategoriaDao();
 		List<Categoria> listaCategoria = dao.listar();
 		model.addAttribute("listaCategoria", listaCategoria);
-
+		
 		return "categoria/pesquisarCategoria";
 	}
 
@@ -42,6 +42,7 @@ public class CategoriaController {
 		CategoriaDao dao = new CategoriaDao();
 		Categoria categoriaCompleta = dao.buscarPorId(categoria.getId());
 		model.addAttribute("categoria", categoriaCompleta);
+		
 		return "categoria/alterarCategoria";
 	}
 
