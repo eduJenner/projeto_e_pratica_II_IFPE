@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,5 +37,13 @@ public class TopicoController {
 		dao1.adiciona(topico);
 		model.addAttribute("msg", "topico criado com sucesso!");
 		return "topico/formulario";
+	}
+	
+	@RequestMapping("/listarTopico")
+	public String listarTopico(Model model) throws SQLException{
+		TopicoDao dao = new TopicoDao();
+		List<Topico> listaTopico = dao.listar();
+		model.addAttribute("listaTopico", listaTopico);
+		return"topico/pesquisarTopico";
 	}
 }

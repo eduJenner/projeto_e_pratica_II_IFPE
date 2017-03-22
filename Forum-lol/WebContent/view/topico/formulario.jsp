@@ -20,9 +20,9 @@ Título:
 <br /><input type="text" name="titulo"><br />
 <br />Conteúdo:
 <br /><textarea rows="20" cols="75" name="conteudo"></textarea><br />
-${usuarioLogado.id}<br />
+<br />
 <input type="hidden" name="usuario" value="${usuarioLogado.id}">
-${categoria.id}
+
 <input type="hidden" name="categoria" value="${categoria.id}">
 
 <br /><input type="submit" value="Criar">

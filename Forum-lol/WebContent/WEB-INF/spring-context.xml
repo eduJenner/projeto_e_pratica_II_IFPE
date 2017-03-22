@@ -32,8 +32,11 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 <property name="converters">
 <list>
 <bean class="controller.UsuarioConverter" />
+<bean class="controller.CategoriaConverter" />
+
 </list>
 </property>
 </bean>
+
 
 </beans>
