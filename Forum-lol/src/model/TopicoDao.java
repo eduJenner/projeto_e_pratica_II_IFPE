@@ -54,11 +54,11 @@ public class TopicoDao {
 				topico.setConteudo(rs.getString("conteudo"));
 				
 				UsuarioDao dao = new UsuarioDao();
-				Usuario usuario = dao.buscarPorId(rs.getInt("id"));
+				Usuario usuario = dao.buscarPorId(rs.getInt("criadorDoTopico"));
 				topico.setUsuario(usuario);
 				
 				CategoriaDao dao2 = new CategoriaDao();
-				Categoria categoria = dao2.buscarPorId(rs.getInt("id"));
+				Categoria categoria = dao2.buscarPorId(rs.getInt("categoriaDoTopico"));
 				topico.setCategoria(categoria);
 				
 				listaTopico.add(topico);
