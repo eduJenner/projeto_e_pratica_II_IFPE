@@ -20,6 +20,7 @@ public class TopicoController {
 
 	@RequestMapping("/novoTopico")
 	public String form(Usuario usuario, Categoria categoria, HttpSession session, Model model) throws SQLException {
+
 		UsuarioDao dao = new UsuarioDao();
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
 		if (usuarioLogado != null) {
@@ -32,18 +33,54 @@ public class TopicoController {
 	@RequestMapping("/criarTopico")
 	public String criarTopico(Topico topico, Model model) throws SQLException {
 
-		
 		TopicoDao dao1 = new TopicoDao();
 		dao1.adiciona(topico);
 		model.addAttribute("msg", "topico criado com sucesso!");
 		return "topico/formulario";
 	}
-	
+
 	@RequestMapping("/listarTopico")
-	public String listarTopico(Model model) throws SQLException{
+	public String listarTopico(Model model) throws SQLException {
+
 		TopicoDao dao = new TopicoDao();
 		List<Topico> listaTopico = dao.listar();
 		model.addAttribute("listaTopico", listaTopico);
-		return"topico/pesquisarTopico";
+		return "topico/pesquisarTopico";
+	}
+
+	@RequestMapping("/exibirAlterarTopico")
+	public String exibirAlterarTopico(Usuario usuario, Categoria categoria, HttpSession session, Topico topico,
+			Model model) throws SQLException {
+
+		UsuarioDao dao = new UsuarioDao();
+		Usuario usuarioLogado = dao.buscarUsuario(usuario);
+		if (usuarioLogado != null) {
+			session.setAttribute("usuarioLogado", usuarioLogado);
+
+		}
+
+		TopicoDao dao2 = new TopicoDao();
+		Topico topicoCompleto = dao2.buscarPorId(topico.getId());
+		model.addAttribute("topico", topicoCompleto);
+		return "topico/alterarTopico";
+	}
+
+	@RequestMapping("/alterarTopico")
+	public String alterarTopico(Topico topico, Model model) throws SQLException {
+
+		TopicoDao dao = new TopicoDao();
+		dao.alterar(topico);
+		model.addAttribute("msg", "Topico alterado com sucesso !");
+
+		return "forward:listarTopico";
+	}
+
+	@RequestMapping("/removerTopico")
+	public String removerTopico(Topico topico, Model model) throws SQLException {
+
+		TopicoDao dao = new TopicoDao();
+		dao.remover(topico);
+		model.addAttribute("msg", "Topico Removido com Sucesso!");
+		return "forward:listarTopico";
 	}
 }

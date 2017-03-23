@@ -31,7 +31,10 @@
 	<td><fmt:formatDate value="${topico.dataCriacaoDoTopico}" pattern="dd/MM/yyyy"/></td>
 	<td>${topico.visualizacoes}</td>
 	<td>${topico.conteudo}</td>
-	<td></td>
+	<td>
+		<a href="exibirAlterarTopico?id=${topico.id}">Alterar</a>
+		<a href="removerTopico?id=${topico.id}">Remover</a>
+	</td>
 </tr>
 </c:forEach>
 </table>
