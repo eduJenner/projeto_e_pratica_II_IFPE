@@ -24,9 +24,9 @@
 	<br />Conteúdo:
 	<textarea name="conteudo" rows="20" cols="75" ></textarea>
 	<br />
-	<input type="hidden" name="usuario" value="${usuarioLogado.id}"/>
+	<input type="hidden" name="usuario" value="${topico.usuario.id}"/>
 
-	<input type="hidden" name="categoria" value="${categoria.id}"/>
+	<input type="hidden" name="categoria" value="${topico.categoria.id}"/>
 
 	<br /><input type="submit" value="Alterar"/>
 	
