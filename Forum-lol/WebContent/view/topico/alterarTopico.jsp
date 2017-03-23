@@ -16,19 +16,19 @@
 	
 <div style="text-align: center; color: red;"> ${msg} </div>
 
-<form action="alterarTopico" method="post">
+<form action="alterarTopico" method="post" >
 
 	<input type="hidden" name="id" value="${topico.id}" />
 	Título:
-<br /><input type="text" name="titulo" value="${topico.titulo}"><br />
-<br />Conteúdo:
-<br /><textarea rows="20" cols="75" name="conteudo" ></textarea><br />
-<br />
-<input type="text" name="usuario" value="${usuarioLogado.id}">
+	<br /><input type="text" name="titulo" value="${topico.titulo}"/><br />
+	<br />Conteúdo:
+	<textarea name="conteudo" rows="20" cols="75" ></textarea>
+	<br />
+	<input type="hidden" name="usuario" value="${usuarioLogado.id}"/>
 
-<input type="text" name="categoria" value="${categoria.id}">
+	<input type="hidden" name="categoria" value="${categoria.id}"/>
 
-<br /><input type="submit" value="Alterar">
+	<br /><input type="submit" value="Alterar"/>
 	
 	</form>
 </body>

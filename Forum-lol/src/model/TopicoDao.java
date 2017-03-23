@@ -115,7 +115,7 @@ public class TopicoDao {
 	public void alterar(Topico topico) {
 
 		try {
-			String sql = "UPDATE topico SET titulo = ?, usuario = ?, categoria = ?, conteudo = ? WHERE id = ?";
+			String sql = "UPDATE topico SET titulo = ?, criadorDoTopico = ?, categoriaDoTopico = ?, conteudo = ? WHERE id = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, topico.getTitulo());
 			stmt.setInt(2, topico.getUsuario().getId());
