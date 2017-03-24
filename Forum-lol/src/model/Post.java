@@ -6,6 +6,7 @@ public class Post {
 	
 		private int id;
 		private Usuario usuario;
+		private Topico topico;
 		private String conteudo;
 		private Date data;
 		public int getId() {
@@ -19,6 +20,12 @@ public class Post {
 		}
 		public void setUsuario(Usuario usuario) {
 			this.usuario = usuario;
+		}
+		public Topico getTopico() {
+			return topico;
+		}
+		public void setTopico(Topico topico) {
+			this.topico = topico;
 		}
 		public String getConteudo() {
 			return conteudo;

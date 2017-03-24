@@ -32,6 +32,7 @@
 	<td>${topico.visualizacoes}</td>
 	<td>${topico.conteudo}</td>
 	<td>
+		<a href="novoPost?id=${topico.id}" name="id">Criar Post</a>
 		<a href="exibirAlterarTopico?id=${topico.id}">Alterar</a>
 		<a href="removerTopico?id=${topico.id}">Remover</a>
 	</td>

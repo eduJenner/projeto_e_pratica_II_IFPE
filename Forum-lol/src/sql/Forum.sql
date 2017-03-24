@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `titulo` varchar(150) DEFAULT NULL,
-  `descricao` varchar(255) DEFAULT NULL,
-  `dataUltimoPost` datetime DEFAULT NULL
+  `descricao` varchar(255) DEFAULT NULL
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -51,8 +51,9 @@ INSERT INTO `categoria` (`id`, `titulo`, `descricao`, `dataUltimoPost`) VALUES
 CREATE TABLE `post` (
   `id` int(11) NOT NULL,
   `criadorDoPost` int(11) NOT NULL,
+  `topicoDoPost` int(11) NOT NULL,
   `conteudo` text NOT NULL,
-  `data` datetime DEFAULT NULL
+  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -160,7 +161,7 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `fk_post` FOREIGN KEY (`criadorDoPost`) REFERENCES `usuario` (`id`);
-
+  ADD CONSTRAINT `fk_topico` FOREIGN KEY(`topicoDoPost`) REFERENCES `topico`(`id`);
 --
 -- Restrições para tabelas `topico`
 --
