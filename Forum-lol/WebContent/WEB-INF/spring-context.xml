@@ -33,7 +33,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 <list>
 <bean class="controller.UsuarioConverter" />
 <bean class="controller.CategoriaConverter" />
-
+<bean class="controller.TopicoConverter"/>
 </list>
 </property>
 </bean>

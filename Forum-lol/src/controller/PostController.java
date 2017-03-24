@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,5 +37,48 @@ public class PostController {
 		dao1.adiciona(post);
 		model.addAttribute("msg", "post criado com sucesso!");
 		return "post/formulario";
+	}
+
+	@RequestMapping("/listarPost")
+	public String listarPost(Model model) throws SQLException {
+
+		PostDao dao = new PostDao();
+		List<Post> listaPost = dao.listar();
+		model.addAttribute("listaPost", listaPost);
+		return "post/pesquisarPost";
+	}
+
+	@RequestMapping("/exibirAlterarPost")
+	public String exibirAlterarPost(Usuario usuario,Post post,Topico topico,HttpSession session, Model model)
+			throws SQLException {
+
+		UsuarioDao dao = new UsuarioDao();
+		Usuario usuarioLogado = dao.buscarUsuario(usuario);
+		if (usuarioLogado != null) {
+			session.setAttribute("usuarioLogado", usuarioLogado);
+
+		}
+
+		PostDao dao2 = new PostDao();
+		Post postCompleto = dao2.buscarPorId(post.getId());
+		model.addAttribute("post", postCompleto);
+		return "post/alterarPost";
+	}
+	@RequestMapping("/alterarPost")
+	public String alterarPost(Post post, Model model) throws SQLException {
+
+		PostDao dao = new PostDao();
+		dao.alterar(post);
+		model.addAttribute("msg", "Post alterado com sucesso !");
+
+		return "forward:listarPost";
+	}
+	@RequestMapping("/removerPost")
+	public String removerPost(Post post, Model model) throws SQLException {
+
+		PostDao dao = new PostDao();
+		dao.remover(post);
+		model.addAttribute("msg", "post Removido com Sucesso!");
+		return "forward:listarPost";
 	}
 }
