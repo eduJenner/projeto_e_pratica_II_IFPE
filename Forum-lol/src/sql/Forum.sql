@@ -1,174 +1,140 @@
--- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- MySQL dump 10.13  Distrib 5.5.52, for debian-linux-gnu (x86_64)
 --
--- Host: localhost
--- Tempo de geração: 21/03/2017 às 13:37
--- Versão do servidor: 5.7.17-0ubuntu0.16.04.1
--- Versão do PHP: 7.0.15-0ubuntu0.16.04.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: Forum
+-- ------------------------------------------------------
+-- Server version	5.5.52-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Banco de dados: `Forum`
+-- Table structure for table `categoria`
 --
 
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `categoria`
---
-
+DROP TABLE IF EXISTS `categoria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categoria` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(150) DEFAULT NULL,
-  `descricao` varchar(255) DEFAULT NULL
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `descricao` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Fazendo dump de dados para tabela `categoria`
+-- Dumping data for table `categoria`
 --
 
-INSERT INTO `categoria` (`id`, `titulo`, `descricao`, `dataUltimoPost`) VALUES
-(1, 'jogos de luta 2d', 'aqui ficarÃ?Â£o todos os jogos de luta 2d', NULL),
-(2, 'jogos de luta 3d', 'aqui ficarÃ?Â£o todos os jogos de luta 3d', NULL),
-(3, 'jogos de rpg', 'jogos de rpg', NULL);
-
--- --------------------------------------------------------
+LOCK TABLES `categoria` WRITE;
+/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estrutura para tabela `post`
+-- Table structure for table `post`
 --
 
+DROP TABLE IF EXISTS `post`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `post` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `criadorDoPost` int(11) NOT NULL,
   `topicoDoPost` int(11) NOT NULL,
   `conteudo` text NOT NULL,
-  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_post` (`criadorDoPost`),
+  KEY `fk_topico` (`topicoDoPost`),
+  CONSTRAINT `fk_topico` FOREIGN KEY (`topicoDoPost`) REFERENCES `topico` (`id`),
+  CONSTRAINT `fk_post` FOREIGN KEY (`criadorDoPost`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Estrutura para tabela `topico`
+-- Dumping data for table `post`
 --
 
+LOCK TABLES `post` WRITE;
+/*!40000 ALTER TABLE `post` DISABLE KEYS */;
+/*!40000 ALTER TABLE `post` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topico`
+--
+
+DROP TABLE IF EXISTS `topico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `topico` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(150) NOT NULL,
   `criadorDoTopico` int(11) NOT NULL,
   `categoriaDoTopico` int(11) NOT NULL,
   `dataCriacaoDoTopico` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `visualizacoes` int(10) UNSIGNED DEFAULT NULL,
-  `conteudo` text NOT NULL
+  `visualizacoes` int(10) unsigned DEFAULT NULL,
+  `conteudo` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_usuario` (`criadorDoTopico`),
+  KEY `fk_categoria` (`categoriaDoTopico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Estrutura para tabela `usuario`
+-- Dumping data for table `topico`
 --
 
+LOCK TABLES `topico` WRITE;
+/*!40000 ALTER TABLE `topico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topico` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `login` varchar(50) NOT NULL,
   `senha` varchar(50) NOT NULL,
   `dataNascimento` date DEFAULT NULL,
-  `imagem` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `imagem` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Fazendo dump de dados para tabela `usuario`
+-- Dumping data for table `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nome`, `email`, `login`, `senha`, `dataNascimento`, `imagem`) VALUES
-(1, 'eduardo', 'eduardo@algumacoisa', 'eduardo', '12@senha', '1993-06-19', NULL),
-(2, 'fulano', 'fulano@hotmail.com', 'fulaninhpo', '12@senha', '1910-10-10', NULL);
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Índices de tabelas apagadas
---
-
---
--- Índices de tabela `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices de tabela `post`
---
-ALTER TABLE `post`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_post` (`criadorDoPost`);
-
---
--- Índices de tabela `topico`
---
-ALTER TABLE `topico`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_usuario` (`criadorDoTopico`),
-  ADD KEY `fk_categoria` (`categoriaDoTopico`);
-
---
--- Índices de tabela `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT de tabelas apagadas
---
-
---
--- AUTO_INCREMENT de tabela `categoria`
---
-ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT de tabela `post`
---
-ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de tabela `topico`
---
-ALTER TABLE `topico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de tabela `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- Restrições para dumps de tabelas
---
-
---
--- Restrições para tabelas `post`
---
-ALTER TABLE `post`
-  ADD CONSTRAINT `fk_post` FOREIGN KEY (`criadorDoPost`) REFERENCES `usuario` (`id`);
-  ADD CONSTRAINT `fk_topico` FOREIGN KEY(`topicoDoPost`) REFERENCES `topico`(`id`);
---
--- Restrições para tabelas `topico`
---
-ALTER TABLE `topico`
-  ADD CONSTRAINT `fk_categoria` FOREIGN KEY (`categoriaDoTopico`) REFERENCES `categoria` (`id`),
-  ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`criadorDoTopico`) REFERENCES `usuario` (`id`);
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-03-24 16:32:13
