@@ -71,6 +71,13 @@ public class UsuarioController {
 		return "usuario/alterarUsuario";
 	}
 
+	@RequestMapping("/exibirDadosUsuario")
+	public String exibirDadosUsuario(HttpSession session, Model model) {
+		Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+		model.addAttribute("usuario", usuarioLogado);
+		return "usuario/alterarUsuario";
+	}
+
 	@RequestMapping("/alterarUsuario")
 	public String alterar(@Valid Usuario usuario, BindingResult result, Model model,
 			@RequestParam("senha") String param1, @RequestParam("confirmarSenha") String param2) throws SQLException {
@@ -113,27 +120,28 @@ public class UsuarioController {
 		model.addAttribute("usuario", usuarioCompleto);
 		return "usuario/alterarUsuario";
 	}
+
 	@RequestMapping("/exibirLogin")
-	public String exibirLogin(){
-		return"login/login";
+	public String exibirLogin() {
+		return "login/login";
 	}
-	
+
 	@RequestMapping("/efetuarLogin")
-	public String login(Usuario usuario, HttpSession session, Model model) throws SQLException{
-		
-		UsuarioDao dao = new  UsuarioDao();
+	public String login(Usuario usuario, HttpSession session, Model model) throws SQLException {
+
+		UsuarioDao dao = new UsuarioDao();
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
-		if(usuarioLogado != null ){
+		if (usuarioLogado != null) {
 			session.setAttribute("usuarioLogado", usuarioLogado);
-			return"index";
+			return "index";
 		}
 		model.addAttribute("msg", "Não foi encontrado um usuário com o login e senha informados.");
 		return "login/login";
 	}
-	
+
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "index";
-		}
+	}
 }
