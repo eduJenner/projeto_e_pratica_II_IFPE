@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import model.Categoria;
+import model.CategoriaDao;
 import model.Topico;
 import model.TopicoDao;
 import model.Usuario;
@@ -19,10 +20,15 @@ import model.UsuarioDao;
 public class TopicoController {
 
 	@RequestMapping("/novoTopico")
-	public String form(Usuario usuario, Categoria categoria, HttpSession session, Model model) throws SQLException {
+	public String form(Usuario usuario, HttpSession session, Model model) throws SQLException {
 
 		UsuarioDao dao = new UsuarioDao();
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
+		
+		CategoriaDao dao2 = new CategoriaDao();
+		List<Categoria> listaCategoria = dao2.listar();
+		model.addAttribute("listaCategoria", listaCategoria);
+		
 		if (usuarioLogado != null) {
 			session.setAttribute("usuarioLogado", usuarioLogado);
 
@@ -49,18 +55,23 @@ public class TopicoController {
 	}
 
 	@RequestMapping("/exibirAlterarTopico")
-	public String exibirAlterarTopico(Usuario usuario, Categoria categoria, HttpSession session, Topico topico,
+	public String exibirAlterarTopico(Usuario usuario, HttpSession session, Topico topico,
 			Model model) throws SQLException {
 
 		UsuarioDao dao = new UsuarioDao();
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
+		
+		CategoriaDao dao2 = new CategoriaDao();
+		List<Categoria> listaCategoria = dao2.listar();
+		model.addAttribute("listaCategoria", listaCategoria);
+		
 		if (usuarioLogado != null) {
 			session.setAttribute("usuarioLogado", usuarioLogado);
 
 		}
 
-		TopicoDao dao2 = new TopicoDao();
-		Topico topicoCompleto = dao2.buscarPorId(topico.getId());
+		TopicoDao dao3 = new TopicoDao();
+		Topico topicoCompleto = dao3.buscarPorId(topico.getId());
 		model.addAttribute("topico", topicoCompleto);
 		return "topico/alterarTopico";
 	}

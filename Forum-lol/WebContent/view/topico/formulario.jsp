@@ -19,11 +19,18 @@
 Título:
 <br /><input type="text" name="titulo"><br />
 <br />Conteúdo:
-<br /><textarea rows="20" cols="75" name="conteudo"></textarea><br />
+<br />
+<textarea rows="20" cols="75" name="conteudo">${topico.conteudo}</textarea><br />
 <br />
 <input type="hidden" name="usuario" value="${usuarioLogado.id}">
 
-<input type="hidden" name="categoria" value="${categoria.id}">
+Categoria:<br />
+<select name="categoria" >
+<option value=""> Selecione </option>
+<c:forEach items="${listaCategoria}" var="obj">
+<option value="${obj.id}"> ${obj.titulo} </option>
+</c:forEach>
+</select>
 
 <br /><input type="submit" value="Criar">
 </form>

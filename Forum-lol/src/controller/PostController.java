@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import model.Post;
 import model.PostDao;
 import model.Topico;
+import model.TopicoDao;
 import model.Usuario;
 import model.UsuarioDao;
 
@@ -19,10 +20,15 @@ import model.UsuarioDao;
 public class PostController {
 
 	@RequestMapping("/novoPost")
-	public String form(Usuario usuario, Topico topico, HttpSession session, Model model) throws SQLException {
+	public String form(Usuario usuario, HttpSession session, Model model) throws SQLException {
 
 		UsuarioDao dao = new UsuarioDao();
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
+		
+		TopicoDao dao2 = new TopicoDao();
+		List<Topico> listaTopico = dao2.listar();
+		model.addAttribute("listaTopico", listaTopico);
+		
 		if (usuarioLogado != null) {
 			session.setAttribute("usuarioLogado", usuarioLogado);
 		}
@@ -49,18 +55,22 @@ public class PostController {
 	}
 
 	@RequestMapping("/exibirAlterarPost")
-	public String exibirAlterarPost(Usuario usuario,Post post,Topico topico,HttpSession session, Model model)
+	public String exibirAlterarPost(Usuario usuario,Post post,HttpSession session, Model model)
 			throws SQLException {
-
+		
 		UsuarioDao dao = new UsuarioDao();
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
+		
+		TopicoDao dao2 = new TopicoDao();
+		List<Topico> listaTopico = dao2.listar();
+		model.addAttribute("listaTopico", listaTopico);
 		if (usuarioLogado != null) {
 			session.setAttribute("usuarioLogado", usuarioLogado);
 
 		}
 
-		PostDao dao2 = new PostDao();
-		Post postCompleto = dao2.buscarPorId(post.getId());
+		PostDao dao3 = new PostDao();
+		Post postCompleto = dao3.buscarPorId(post.getId());
 		model.addAttribute("post", postCompleto);
 		return "post/alterarPost";
 	}

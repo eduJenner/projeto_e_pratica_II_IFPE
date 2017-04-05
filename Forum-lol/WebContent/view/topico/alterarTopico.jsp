@@ -21,12 +21,19 @@
 	<input type="hidden" name="id" value="${topico.id}" />
 	Título:
 	<br /><input type="text" name="titulo" value="${topico.titulo}"/><br />
-	<br />Conteúdo:
-	<textarea name="conteudo" rows="20" cols="75" ></textarea>
+	<br />Conteúdo:<br />
+	<textarea name="conteudo" rows="20" cols="75" >${topico.conteudo}</textarea>
 	<br />
 	<input type="hidden" name="usuario" value="${topico.usuario.id}"/>
 
-	<input type="hidden" name="categoria" value="${topico.categoria.id}"/>
+	<select name="categoria" >
+				<option value=""> Selecione </option>
+				<c:forEach items="${listaCategoria}" var="obj">
+					<option value="${obj.id}" <c:if test="${obj.id eq topico.categoria.id}">selected="selected"</c:if>> 
+						${obj.titulo} 
+					</option>
+				</c:forEach> 
+			</select>
 
 	<br /><input type="submit" value="Alterar"/>
 	
