@@ -13,23 +13,25 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Usuario {
 
 	private int id;
-	@Size(min = 5, max = 50, message = "Mínimo 5 caracteres!")
-	private String nome;
-
-	@Email(message = "E-mail incorreto!")
+	
+	@Size(min = 5, max = 50, message = "O nome deve ter no mínimo 5 caracteres!")
+	@Pattern(regexp = "[A-Z][a-z]{1,}",message="A primeira letra do nome deve ser maiúscula!")
 	@NotEmpty(message = "O nome deve ser preenchido!")
+	private String nome;
+	@Email(message = "E-mail incorreto!")
+	@NotEmpty(message = "O email deve ser preenchido!")
 	private String email;
-
-	@Size(min = 5, max = 50, message = "Mínimo 5 caracteres!")
+	@Size(min = 5, max = 50, message = "O login deve ter no mínimo 5 caracteres!")
 	@NotEmpty(message = "O login deve ser preenchido!")
 	private String login;
-	@Size(min = 8,message = "Mínimo 8 caracteres!")
+	@Size(min = 8,message = "A senha deve ter no mínimo 8 caracteres!")
 	@Pattern(regexp = "(?!.*\\s)((?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%]).{8,20})$", message = "A senha deve conter pelo menos um caractere especial,número e letra!")
 	@NotEmpty(message = "A senha deve ser preenchida!")
 	private String senha;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Past(message = "Data incorreta!")
 	private Date dataNascimento;
+
 	private String imagem;
 
 	public int getId() {

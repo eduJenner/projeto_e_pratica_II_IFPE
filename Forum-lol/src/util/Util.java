@@ -19,7 +19,7 @@ public class Util {
 
 			try {
 				// Criando o diretório para armazenar o arquivo
-				String workspaceProjeto = "/home/dico/git/Projeto_2/Forum-lol";
+				String workspaceProjeto = "/home/eduardo/git/Projeto_2/Forum-lol";
 				File dir = new File(workspaceProjeto + "/WebContent/view/img/");
 				if (!dir.exists()) {
 					dir.mkdirs();

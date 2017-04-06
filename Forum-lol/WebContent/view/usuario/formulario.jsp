@@ -17,27 +17,27 @@
 	
 	<div style="text-align: center; color: red;"> ${msg} </div>
 	<form action="cadastraUsuario" method="post" enctype="multipart/form-data">
-	<form:errors path="usuario.nome" cssStyle="color: red;" />
+	<form:errors path="usuario.nome" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.email" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.login" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.senha" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.dataNascimento" cssStyle="color: red;" /><br />
 	
-	<br />Nome:<br />
+		<br />Nome:<br />
 		<input type="text" name="nome">
-	<form:errors path="usuario.email" cssStyle="color: red;" />
 		<br />Email:<br />
 		<input type="text" name="email">
-	<form:errors path="usuario.login" cssStyle="color: red;" />
 		<br /> Login:<br />
 		<input type="text" name="login">
-	<form:errors path="usuario.senha" cssStyle="color: red;" />
 		<br /> Senha:<br />
 		<input type="password" name="senha">
 		<br /> Confirmar Senha:<br />
 		<input type="password" name="confirmarSenha">
-	<form:errors path="usuario.dataNascimento" cssStyle="color: red;" />
 		<br /> Data de Nascimento:<br />
 		<input type="text" name="dataNascimento" />
 		<br /> Foto:<br />
 		<input type="file" name="file"> <br />
-		<input type="submit"  value="Cadastar">
+		 <br /><input type="submit"  value="Cadastar">
 	</form>
 </body>
 </html>

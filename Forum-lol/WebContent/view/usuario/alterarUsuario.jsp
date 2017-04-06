@@ -16,31 +16,37 @@
 	
 	<div style="text-align: center; color: red;"> ${msg} </div>
 	
-<form action="alterarUsuario" method="post">
+<form action="alterarUsuario" method="post" enctype="multipart/form-data">
+
+	<form:errors path="usuario.nome" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.email" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.login" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.senha" cssStyle="color: red;" /><br />
+	<form:errors path="usuario.dataNascimento" cssStyle="color: red;" /><br />
+
+
+
+		<input type="hidden" name="id" value="${usuario.id}" />
 	
-	
-	
-	<input type="hidden" name="id" value="${usuario.id}" />
-	
-	nome:<br />
-	<form:errors path="usuario.nome" cssStyle="color: red;" />
+		nome:<br />
 		<input type="text" name="nome" value="${usuario.nome}" />
 		<br />email:<br />
-	<form:errors path="usuario.email" cssStyle="color: red;" />
 		<input type="text" name="email" value="${usuario.email}" />
 		<br /> login:<br />
-	<form:errors path="usuario.login" cssStyle="color: red;" />
 		<input type="text" name="login" value="${usuario.login}" />
 		<br /> senha:<br />
-	<form:errors path="usuario.senha" cssStyle="color: red;" />
 		<input type="password" name="senha" value="${usuario.senha}" />
 		<br /> confirmar senha:<br />
 		<input type="password" name="confirmarSenha" />
 		<br /> data de nascimento:<br />
-		<form:errors path="usuario.dataNascimento" cssStyle="color: red;" />
 		<input type="text" name="dataNascimento"  value="<fmt:formatDate value='${usuario.dataNascimento}' pattern='dd/MM/yyyy' />"  />
 		<br /> foto:<br />
+		<input type="hidden" name="imagem" value="${usuario.imagem}" />
+		<img alt="" src="view/img/${usuario.imagem}" style="width: 30%;">
 		<br />
+		Insira uma nova foto:<br />
+		<br /><input type="file" name="file">
+		<br />	<br />
 		<input type="submit"  value="alterar" >
 	
 </form>

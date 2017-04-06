@@ -136,38 +136,43 @@ public class UsuarioDao {
 		}
 	}
 
-	public Usuario buscarLogin(String login) {
+	public List<Usuario> pesquisar(String login) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM usuario WHERE login = ?");
-			stmt.setString(1, login);
-			ResultSet rs = stmt.executeQuery();
+			List<Usuario> listaUsuario = new ArrayList<Usuario>();
+			PreparedStatement stmt = null;
 
-			Usuario usuario = null;
-
-			if (rs.next()) {
-				usuario = new Usuario();
-
-				usuario.setId(rs.getInt("id"));
-				usuario.setNome(rs.getString("nome"));
-				usuario.setEmail(rs.getString("email"));
-				usuario.setLogin(rs.getString("login"));
-				usuario.setSenha(rs.getString("senha"));
-				usuario.setDataNascimento(rs.getDate("dataNascimento"));
-				usuario.setImagem(rs.getString("imagem"));
+			if (!login.equals("")) {
+				stmt = this.connection.prepareStatement("SELECT * FROM usuario WHERE login LIKE ? ORDER BY login");
+				stmt.setString(1, "%" + login + "%");
+			} else {
+				stmt = this.connection.prepareStatement("SELECT * FROM usuario ORDER BY login");
 
 			}
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Usuario usuario2 = new Usuario();
 
+				usuario2.setId(rs.getInt("id"));
+				usuario2.setNome(rs.getString("nome"));
+				usuario2.setEmail(rs.getString("email"));
+				usuario2.setLogin(rs.getString("login"));
+				usuario2.setSenha(rs.getString("senha"));
+				usuario2.setDataNascimento(rs.getDate("dataNascimento"));
+				usuario2.setImagem(rs.getString("imagem"));
+
+				listaUsuario.add(usuario2);
+			}
 			rs.close();
 			stmt.close();
 			connection.close();
+			return listaUsuario;
 
-			return usuario;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 
 	}
-	
+
 	public Usuario buscarUsuario(Usuario usuario) {
 
 		try {
@@ -180,7 +185,7 @@ public class UsuarioDao {
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				
+
 				usuarioConsultado = new Usuario();
 				usuarioConsultado.setId(rs.getInt("id"));
 				usuarioConsultado.setNome(rs.getString("nome"));
@@ -195,7 +200,7 @@ public class UsuarioDao {
 			stmt.close();
 
 			return usuarioConsultado;
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
